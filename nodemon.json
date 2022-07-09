@@ -1,0 +1,12 @@
+{
+  "ignore" :[
+    ".git",
+    "node_nodules/",
+    "dist/",
+    "coverage/"
+  ],
+  "watch" :[
+    "src/*"
+  ],
+  "ext": "js,json,ts"
+}
