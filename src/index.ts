@@ -1,5 +1,6 @@
-import express from 'express';
+import express, {Request, Response} from 'express';
 import cors from 'cors';
+import {routes} from "./routes";
 
 const app =  express();
 
@@ -8,10 +9,11 @@ app.use(cors({
   origin: ["http://localhost:3000"]
 }));
 
-app.get('/', (Request, Response) => {
-  Response.send('Hello World2');
-});
+// app.get('/', (Request, Response) => {
+//   Response.send('Hello World');
+// });
+routes(app);
 
-app.listen(8080, () => {
-  console.log('listning to port 8080')
+app.listen(8000, () => {
+  console.log('listning to port 8000')
 });

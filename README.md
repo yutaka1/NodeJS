@@ -26,3 +26,6 @@ nodeの代わりにnodemonを使ってコードを走らせると、コードの
 11. Expressのインストール
   1. npm i express cors
   2. npm i -D @types/express @types/cors
+
+12. validationのインストール
+npm i express-validation --save
