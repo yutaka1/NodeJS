@@ -26,6 +26,13 @@ nodeの代わりにnodemonを使ってコードを走らせると、コードの
 11. Expressのインストール
   1. npm i express cors
   2. npm i -D @types/express @types/cors
-
+## バリデーションチェック
 12. validationのインストール
 npm i express-validation --save
+## TypeORMの導入
+Typescript用のORマッパー。Typescriptを使って、データベースに値を保存するためのライブラリ。\n
+13. https://www.npmjs.com/package/typeorm を参考にインストール
+
+## Passwordのhashtag化
+14. npm i bcryptjs 
+15. npm i @types/bcryptjs
