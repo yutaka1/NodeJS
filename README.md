@@ -33,6 +33,11 @@ npm i express-validation --save
 Typescript用のORマッパー。Typescriptを使って、データベースに値を保存するためのライブラリ。\n
 13. https://www.npmjs.com/package/typeorm を参考にインストール
 
-## Passwordのhashtag化
+## Passwordのhash化
 14. npm i bcryptjs 
 15. npm i @types/bcryptjs
+
+## Json web Token
+16. npm i jsonwebtoken 
+17. npm i -D @types/jsonwebtoken
+

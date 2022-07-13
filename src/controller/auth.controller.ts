@@ -3,10 +3,12 @@ import { User } from "../entity/user.entity";
 import { RegisterValidation } from "../validation/register.validation";
 import { AppDataSource } from "../data-source";
 import bycryptjs from "bcryptjs";
+import {sign} from "jsonwebtoken";
 
 export const Register = async (req: Request, res: Response) => {
   const body = req.body;
 
+  // バリデーションの確認
   const {error} = RegisterValidation.validate(body);
 
   if (error){
@@ -30,4 +32,42 @@ export const Register = async (req: Request, res: Response) => {
   });
 
   res.send(user);
+}
+
+export const Login = async (req: Request, res: Response) => {
+  const repository = AppDataSource.getRepository(User);
+  const body = req.body;
+
+  const user = await repository.findOne({
+    where: {
+      email: body.email
+    }
+  });
+
+  if(!user){
+    return res.status(404).send({
+      message: 'user not found!'
+    })
+  }
+
+  if(!await bycryptjs.compare(body.password, user.password)){
+    return res.status(400).send({
+      message: 'invalid credentials!'
+    })
+  }
+
+  const payload = {
+    id: user.id
+  }
+
+  const token = sign(payload, "secret");
+
+  res.cookie('jwt', token,{
+    httpOnly: true,
+    maxAge: 24 * 60 * 60 * 1000 // 1day
+  });
+
+  res.send({
+    message: 'success'
+  });
 }
