@@ -11,7 +11,8 @@
       "name": "MySQL Local",
       "username": "root",
       "password": "rootroot",
-      "database": "node_app"
+      "database": "node_app",
+      "connectionTimeout": 100
     }
   ]
 }
