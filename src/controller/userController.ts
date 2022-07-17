@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
-import { AppDataSource } from "../data-source";
-import { User } from "../entity/user.entity";
+import { AppDataSource } from "../dataSource";
+import { User } from "../entity/userEntity";
 import bycryptjs from "bcryptjs";
 
 export const Users = async (req: Request, res: Response) => {

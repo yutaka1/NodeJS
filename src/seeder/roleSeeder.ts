@@ -1,6 +1,6 @@
-import { AppDataSource } from "../data-source";
-import { Permission } from "../entity/permission.entity";
-import { Role } from "../entity/role.entity";
+import { AppDataSource } from "../dataSource";
+import { Permission } from "../entity/permissionEntity";
+import { Role } from "../entity/roleEntity";
 
 
 AppDataSource.initialize()

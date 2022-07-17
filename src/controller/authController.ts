@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
-import { User } from "../entity/user.entity";
-import { RegisterValidation } from "../validation/register.validation";
-import { AppDataSource } from "../data-source";
+import { User } from "../entity/userEntity";
+import { RegisterValidation } from "../validation/registerValidation";
+import { AppDataSource } from "../dataSource";
 import bycryptjs from "bcryptjs";
 import {sign, verify} from "jsonwebtoken";
 import { Repository } from "typeorm";
