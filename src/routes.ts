@@ -1,7 +1,9 @@
 import { Router } from "express"
-import { Register, Login, AuthenticatedUser, Logout, UpdateInfo, UpdatePassword } from "./controller/auth.controller"
-import { Users, CreateUser, GetUser, UpdateUser, DeleteUser } from "./controller/user.constroller";
-import { AuthMiddleware } from "./middleware/auth.middleware";
+import { Register, Login, AuthenticatedUser, Logout, UpdateInfo, UpdatePassword } from "./controller/authController"
+import { Permissions } from "./controller/permissionController";
+import { CreateRole, Roles, GetRole, UpdateRole, DeleteRole } from "./controller/roleController";
+import { Users, CreateUser, GetUser, UpdateUser, DeleteUser } from "./controller/userController";
+import { AuthMiddleware } from "./middleware/authMiddleware";
 
 export const routes = (router: Router) => {
   router.post('/api/register', Register);
@@ -16,4 +18,11 @@ export const routes = (router: Router) => {
   router.get('/api/users/:id', AuthMiddleware, GetUser);
   router.put('/api/users/:id', AuthMiddleware, UpdateUser);
   router.delete('/api/users/:id', AuthMiddleware, DeleteUser);
+
+  router.get('/api/permissions', AuthMiddleware, Permissions);
+  router.get('/api/roles', AuthMiddleware, Roles);
+  router.post('/api/roles', AuthMiddleware, CreateRole);
+  router.get('/api/roles/:id', AuthMiddleware, GetRole);
+  router.put('/api/roles/:id', AuthMiddleware, UpdateRole);
+  router.delete('/api/roles/:id', AuthMiddleware, DeleteRole);
 }

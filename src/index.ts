@@ -3,7 +3,7 @@ require('dotenv').config();
 import express from 'express';
 import cors from 'cors';
 import { routes } from "./routes";
-import { AppDataSource } from "./data-source";
+import { AppDataSource } from "./dataSource";
 import cookieParser from 'cookie-parser';
 
 
