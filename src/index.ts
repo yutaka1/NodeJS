@@ -1,7 +1,10 @@
-import express, { Request, Response } from 'express';
+require('dotenv').config();
+
+import express from 'express';
 import cors from 'cors';
 import { routes } from "./routes";
 import { AppDataSource } from "./data-source";
+import cookieParser from 'cookie-parser';
 
 
 AppDataSource.initialize()
@@ -9,6 +12,7 @@ AppDataSource.initialize()
     const app = express();
 
     app.use(express.json());
+    app.use(cookieParser());
     app.use(cors({
       credentials: true,
       origin: ["http://localhost:3000"]
@@ -21,5 +25,3 @@ AppDataSource.initialize()
     });
   })
   .catch((error) => console.log(error))
-
-

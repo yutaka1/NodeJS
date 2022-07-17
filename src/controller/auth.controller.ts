@@ -3,7 +3,8 @@ import { User } from "../entity/user.entity";
 import { RegisterValidation } from "../validation/register.validation";
 import { AppDataSource } from "../data-source";
 import bycryptjs from "bcryptjs";
-import {sign} from "jsonwebtoken";
+import {sign, verify} from "jsonwebtoken";
+import { Repository } from "typeorm";
 
 export const Register = async (req: Request, res: Response) => {
   const body = req.body;
@@ -23,7 +24,6 @@ export const Register = async (req: Request, res: Response) => {
 
   const repositry = AppDataSource.getRepository(User);
 
-  // passwordの情報以外をクライアントに返す
   const {password, ...user} = await repositry.save({
     first_name: body.first_name,
     last_name: body.last_name,
@@ -60,12 +60,50 @@ export const Login = async (req: Request, res: Response) => {
     id: user.id
   }
 
-  const token = sign(payload, "secret");
+  const token = sign(payload, process.env.SECRET_KEY);
 
   res.cookie('jwt', token,{
     httpOnly: true,
     maxAge: 24 * 60 * 60 * 1000 // 1day
   });
+
+  res.send({
+    message: 'success'
+  });
+}
+
+export const AuthenticatedUser = async (req: Request, res: Response) => {
+  try{
+    const jwt = req.cookies['jwt'];
+
+    const payload: any = verify(jwt, process.env.SECRET_KEY);
+  
+    if(!payload) {
+      return res.status(401).send({
+        message: 'unauthenticated'
+      });
+    }
+  
+    const repository = AppDataSource.getRepository(User);
+  
+    // const user = await Repository.findOne(payload.id);
+    const {password, ...user} = await repository.findOne({
+      where: {
+        id: payload.id
+      }
+    });
+  
+    res.send(repository);
+  }
+  catch(e) {
+    return res.status(401).send({
+      message: 'unauthenticated'
+    });
+  }
+}
+
+export const Logout = async (req: Request, res: Response) => {
+  res.cookie('jwt', '', {maxAge: 0});
 
   res.send({
     message: 'success'
