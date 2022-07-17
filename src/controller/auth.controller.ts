@@ -96,7 +96,8 @@ export const UpdateInfo = async (req: Request, res: Response) => {
   const {password, ...data} =  await repository.findOne({
     where: {
       id: user.id
-    }
+    },
+    relations: ['role'],
   });
 
   res.send(data);

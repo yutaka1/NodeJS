@@ -51,3 +51,23 @@ Typescript用のORマッパー。Typescriptを使って、データベースに�
 
 ## 環境変数
 1. npm i dotenv
+
+
+
+
+# 実行
+## サーバー実行
+npm run start
+
+## ロールとpermissionのマスターDB構築
+npm run roles:seed
+
+# SQL分を流す
+roleとpermissionは、マスターなので作り直す時が全ての値が消えるようにしておく
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+truncate table permission;
+truncate table role;
+
+SET FOREIGN_KEY_CHECKS = 1;
