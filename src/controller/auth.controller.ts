@@ -73,33 +73,9 @@ export const Login = async (req: Request, res: Response) => {
 }
 
 export const AuthenticatedUser = async (req: Request, res: Response) => {
-  try{
-    const jwt = req.cookies['jwt'];
-
-    const payload: any = verify(jwt, process.env.SECRET_KEY);
+  const {password, ...user} = req['user'];
   
-    if(!payload) {
-      return res.status(401).send({
-        message: 'unauthenticated'
-      });
-    }
-  
-    const repository = AppDataSource.getRepository(User);
-  
-    // const user = await Repository.findOne(payload.id);
-    const {password, ...user} = await repository.findOne({
-      where: {
-        id: payload.id
-      }
-    });
-  
-    res.send(repository);
-  }
-  catch(e) {
-    return res.status(401).send({
-      message: 'unauthenticated'
-    });
-  }
+  res.send(user);
 }
 
 export const Logout = async (req: Request, res: Response) => {
