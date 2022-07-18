@@ -1,5 +1,5 @@
-# VueJS_NodeJS
-VueJSとNodeJSの学習用
+# NodeJS
+NodeJSの学習用
 
  # 環境構築
 
