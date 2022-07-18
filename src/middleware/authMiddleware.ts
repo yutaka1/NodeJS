@@ -17,10 +17,16 @@ export const AuthMiddleware = async (req: Request, res: Response, next: Function
   
     const repository = AppDataSource.getRepository(User);
   
+    // req["user"] = await repository.findOne({
+    //   where: {
+    //     id: payload.id
+    //   }
+    // });
     req["user"] = await repository.findOne({
       where: {
         id: payload.id
-      }
+      },
+      relations: ['role', 'role.permissions']
     });
 
     next();
