@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Parser } from "json2csv";
+import { getManager } from "typeorm";
 import { AppDataSource } from "../dataSource";
 import { Order } from "../entity/orderEntity";
 import { OrderItem } from "../entity/orderItemEntity";
@@ -43,7 +44,7 @@ export const Export = async (req: Request, res: Response) => {
   const orders = await repository.find({
     relations: ['order_items']
   });
- 
+
   const json = [];
 
   orders.forEach((order: Order) => {
@@ -73,4 +74,19 @@ export const Export = async (req: Request, res: Response) => {
   res.header('Content-Type', 'text/csv');
   res.attachment('order.csv');
   res.send(csv);
+}
+
+export const Chart = async (req: Request, res: Response) => {
+  const manager = AppDataSource;
+
+  const result = await manager.query(`
+    SELECT DATE_FORMAT(o.created_at, '%Y-%m-%d') as date, SUM(oi.price * oi.quantity) as sum
+    FROM \`order\` o
+      JOIN order_item oi 
+    on o.id = oi.order_id
+    GROUP BY date
+    `
+  )
+
+  res.send(result);
 }
