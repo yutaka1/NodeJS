@@ -52,8 +52,16 @@ Typescript用のORマッパー。Typescriptを使って、データベースに�
 ## 環境変数
 1. npm i dotenv
 
+## fakeデータを流す
+1. npm install --save-dev @faker-js/faker
 
+## imageデータ
+npm i multer 
+npm i -D @types/multer 
 
+## CSVデータ
+npm i json2csv 
+npm i -D @types/json2csv
 
 # 実行
 ## サーバー実行
@@ -62,7 +70,7 @@ npm run start
 ## ロールとpermissionのマスターDB構築
 npm run roles:seed
 
-# SQL分を流す
+## SQLを流す
 roleとpermissionは、マスターなので作り直す時が全ての値が消えるようにしておく
 
 SET FOREIGN_KEY_CHECKS = 0;
@@ -71,3 +79,4 @@ truncate table permission;
 truncate table role;
 
 SET FOREIGN_KEY_CHECKS = 1;
+

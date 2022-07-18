@@ -4,11 +4,24 @@ import { Product } from "../entity/productEntity";
 import bycryptjs from "bcryptjs";
 
 export const Products = async (req: Request, res: Response) => {
+  const take = 7;
+  const page = parseInt(req.query.page as string || '1');
+
   const repository = AppDataSource.getRepository(Product);
 
-  const products = await repository.find();
+  const [data, total] = await repository.findAndCount({
+    take,
+    skip: (page - 1) * take
+  });
 
-  res.send(products);
+  res.send({
+    data,
+    meta: {
+      total,
+      page,
+      last_page: Math.ceil(total / take)
+    }
+  });
 }
 
 export const CreateProduct = async (req: Request, res: Response) => {
